@@ -13,7 +13,7 @@ public class App {
         TryInterface start();
     }
 
-    public static void main(String[] args) {
+    public static void main1(String[] args) {
         // mavenビルド時に、勝手に@Componentがついているインタフェースを漁って勝手に作るクラス
         // Dagger{親クラス名}_{インタフェース名}#create() がネーミングルールらしい。
         // 多重も可能っぽい...Dagger{祖父クラス}_{親クラス}_{インタフェース名}#create()みたいな
@@ -28,5 +28,18 @@ public class App {
         System.out.println(application.getPrintText());
         // ヤバイチョットタノシイ
         // そしてむっちゃかるい
+    }
+
+    // ------------------------------------------------------------
+
+    public static void main(String[] args) {
+        // どうやらこのDIライブラリはAndroid向けに作られたっポイ。
+        // だから、エンドポイントが自ら作れないような状況を想定して動かせる。
+        // 例えば、すでに既存の（もちろんDIコンテナがない）実行エンジン上で呼び出される
+        // 一つのアクティビティの中でInjectしたい場合を考える。
+        // 以下のComponentは実行エンジンが生成し、必ずrunメソッドを実行するものとする。
+        // このエンドポイントは実行エンジンによって実行されたものとする。
+        MyComponent component = new MyComponent();
+        component.run();
     }
 }
